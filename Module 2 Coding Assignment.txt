@@ -1,0 +1,181 @@
+1.
+Question 1
+Run Query: Find all the tracks that have a length of 5,000,000 milliseconds or more.
+
+SELECT *
+FROM Tracks
+WHERE Milliseconds>5000000
+
++---------+-------------------------+---------+-------------+---------+----------+--------------+------------+-----------+
+| TrackId | Name                    | AlbumId | MediaTypeId | GenreId | Composer | Milliseconds |      Bytes | UnitPrice |
++---------+-------------------------+---------+-------------+---------+----------+--------------+------------+-----------+
+|    2820 | Occupation / Precipice  |     227 |           3 |      19 |     None |      5286953 | 1054423946 |      1.99 |
+|    3224 | Through a Looking Glass |     229 |           3 |      21 |     None |      5088838 | 1059546140 |      1.99 |
++---------+-------------------------+---------+-------------+---------+----------+--------------+------------+-----------+
+
+Question 2
+Run Query: Find all the invoices whose total is between $5 and $15 dollars.
+
+select *
+from Invoices
+where total between 5 and 15
+
++-----------+------------+---------------------+-------------------------+-------------+--------------+----------------+-------------------+-------+
+| InvoiceId | CustomerId | InvoiceDate         | BillingAddress          | BillingCity | BillingState | BillingCountry | BillingPostalCode | Total |
++-----------+------------+---------------------+-------------------------+-------------+--------------+----------------+-------------------+-------+
+|         3 |          8 | 2009-01-03 00:00:00 | Grétrystraat 63         | Brussels    |         None | Belgium        | 1000              |  5.94 |
+|         4 |         14 | 2009-01-06 00:00:00 | 8210 111 ST NW          | Edmonton    |           AB | Canada         | T6G 2C7           |  8.91 |
+|         5 |         23 | 2009-01-11 00:00:00 | 69 Salem Street         | Boston      |           MA | USA            | 2113              | 13.86 |
+|        10 |         46 | 2009-02-03 00:00:00 | 3 Chatham Street        | Dublin      |       Dublin | Ireland        | None              |  5.94 |
+|        11 |         52 | 2009-02-06 00:00:00 | 202 Hoxton Street       | London      |         None | United Kingdom | N1 5LH            |  8.91 |
+|        12 |          2 | 2009-02-11 00:00:00 | Theodor-Heuss-Straße 34 | Stuttgart   |         None | Germany        | 70174             | 13.86 |
+|        17 |         25 | 2009-03-06 00:00:00 | 319 N. Frances Street   | Madison     |           WI | USA            | 53703             |  5.94 |
+|        18 |         31 | 2009-03-09 00:00:00 | 194A Chain Lake Drive   | Halifax     |           NS | Canada         | B3S 1C5           |  8.91 |
+|        19 |         40 | 2009-03-14 00:00:00 | 8, Rue Hanovre          | Paris       |         None | France         | 75002             | 13.86 |
+|        24 |          4 | 2009-04-06 00:00:00 | Ullevålsveien 14        | Oslo        |         None | Norway         | 0171              |  5.94 |
++-----------+------------+---------------------+-------------------------+-------------+--------------+----------------+-------------------+-------+
+(Output limit exceeded, 10 of 168 total rows shown)
+
+
+Question 3
+Run Query: Find all the customers from the following States: RJ, DF, AB, BC, CA, WA, NY.
+
+
+SELECT State, company, FirstName, LastName
+FROM Customers
+WHERE FirstName='Jack' and LastName='Smith'
+
++-------+-----------------------+-----------+----------+
+| State | Company               | FirstName | LastName |
++-------+-----------------------+-----------+----------+
+| WA    | Microsoft Corporation | Jack      | Smith    |
++-------+-----------------------+-----------+----------+
+What company does Jack Smith work for?
+
+Question 4
+Run Query: Find all the invoices for customer 56 and 58 where the total was between $1.00 and $5.00.
+
+
+select InvoiceDate, InvoiceId, CustomerId, total
+FROM Invoices
+Where Invoiceid=315
+
++---------------------+-----------+------------+-------+
+| InvoiceDate         | InvoiceId | CustomerId | Total |
++---------------------+-----------+------------+-------+
+| 2012-10-27 00:00:00 |       315 |         58 |  1.98 |
++---------------------+-----------+------------+-------+
+What was the invoice date for invoice ID 315?
+
+Question 5
+Run Query: Find all the tracks whose name starts with 'All'.
+
+123
+SELECT Name
+FROM Tracks
+WHERE Name like 'All%'
+
++----------------------------------------+
+| Name                                   |
++----------------------------------------+
+| All I Really Want                      |
+| All For You                            |
+| All Star                               |
+| All My Life                            |
+| All My Love                            |
+| All Within My Hands                    |
+| All or None                            |
+| All Dead, All Dead                     |
+| All the Best Cowboys Have Daddy Issues |
+| All Because Of You                     |
++----------------------------------------+
+(Output limit exceeded, 10 of 15 total rows shown)
+
+Question 6
+Run Query: Find all the customer emails that start with "J" and are from gmail.com.
+
+
+SELECT Email
+FROM Customers
+WHERE Email like "J%@gmail.com"
+
++---------------------+
+| Email               |
++---------------------+
+| jubarnett@gmail.com |
++---------------------+
+
+Question 7
+Run Query: Find all the invoices from the billing city Brasília, Edmonton, and Vancouver and sort in descending order by invoice ID.
+
+SELECT InvoiceId, Total, BillingCity
+FROM Invoices
+WHERE BillingCity in ("Brasília", "Edmonton", "Vancouver")
+Order by InvoiceId desc
+
++-----------+-------+-------------+
+| InvoiceId | Total | BillingCity |
++-----------+-------+-------------+
+|       362 | 13.86 | Edmonton    |
+|       351 |  1.98 | Edmonton    |
+|       328 |  0.99 | Vancouver   |
+|       319 |  8.91 | Brasília    |
+|       276 |  5.94 | Vancouver   |
+|       264 | 13.86 | Brasília    |
+|       254 |  3.96 | Vancouver   |
+|       253 |  1.98 | Brasília    |
+|       231 |  1.98 | Vancouver   |
+|       230 |  0.99 | Edmonton    |
++-----------+-------+-------------+
+(Output limit exceeded, 10 of 21 total rows shown)
+
+Question 8
+Run Query: Show the number of orders placed by each customer (hint: this is found in the invoices table) and sort the result by the number of orders in descending order.
+
+select customerId, count(InvoiceId) as orders
+from Invoices
+group by customerId
+Order by orders desc
+
++------------+--------+
+| CustomerId | orders |
++------------+--------+
+|          1 |      7 |
+|          2 |      7 |
+|          3 |      7 |
+|          4 |      7 |
+|          5 |      7 |
+|          6 |      7 |
+|          7 |      7 |
+|          8 |      7 |
+|          9 |      7 |
+|         10 |      7 |
++------------+--------+
+(Output limit exceeded, 10 of 59 total rows shown)
+
+Question 9
+Run Query: Find the albums with 12 or more tracks.
+
+12435
+select AlbumId, count(TrackId) as Truck_Num
+from Tracks
+group by AlbumId
+having count(TrackId) >=12
+
+Reset
++---------+-----------+
+| AlbumId | Truck_Num |
++---------+-----------+
+|       5 |        15 |
+|       6 |        13 |
+|       7 |        12 |
+|       8 |        14 |
+|      10 |        14 |
+|      11 |        12 |
+|      12 |        12 |
+|      14 |        13 |
+|      18 |        17 |
+|      21 |        18 |
++---------+-----------+
+(Output limit exceeded, 10 of 158 total rows shown)
+
